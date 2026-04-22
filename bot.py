@@ -155,6 +155,7 @@ def run_bot():
     message += "\n💼 YOUR PORTFOLIO:\n"
     for p in portfolio_report:
         message += p + "\n"
+    send_telegram(message)
 
 if __name__ == "__main__":
     send_telegram("TEST MESSAGE 🚀")
