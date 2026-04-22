@@ -67,9 +67,9 @@ def analyze(stock):
 
     confidence = min(max((score + 5) * 10, 0), 100)
 
-    if score >= 4:
+    if score >= 2:
         signal = "BUY"
-    elif score <= -4:
+    elif score <= -2:
         signal = "SELL"
     else:
         signal = "HOLD"
