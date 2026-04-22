@@ -8,6 +8,14 @@ from telegram import Bot
 TOKEN = os.getenv("TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
+def send_telegram(message):
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+    data = {
+        "chat_id": CHAT_ID,
+        "text": message
+    }
+    res = requests.post(url, data=data)
+    print(res.text)
 bot = Bot(token=TOKEN)
 
 STOCKS = [
@@ -148,7 +156,6 @@ def run_bot():
     for p in portfolio_report:
         message += p + "\n"
 
-    bot.send_message(chat_id=CHAT_ID, text=message)
-
 if __name__ == "__main__":
+    send_telegram("TEST MESSAGE 🚀")
     run_bot()
