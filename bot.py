@@ -144,11 +144,11 @@ def run_bot():
 
     message = "📊 PSX FINAL REPORT\n\n"
     
-   message += "🟢 TOP BUY:\n"
+message += "🟢 TOP BUY:\n"
 for r in top_buy:
     message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
 
-   message += "\n🔴 TOP SELL:\n"
+message += "\n🔴 TOP SELL:\n"
 for r in top_sell:
     message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
 
