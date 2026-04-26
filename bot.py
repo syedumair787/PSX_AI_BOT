@@ -24,22 +24,45 @@ STOCKS = [
 ]
 
 def get_data(symbol):
-    try:
-        url = f"https://stooq.com/q/d/l/?s={symbol.lower()}.pk&i=d"
-        df = pd.read_csv(url)
+    import time
 
-        if df.empty:
-            print(symbol, "No Data ❌")
-            return None
+    name = SYMBOL_MAP.get(symbol, symbol.lower())
+    url = f"https://www.investing.com/equities/{name}-historical-data"
 
-        df = df.sort_values("Date")
-        df.rename(columns={"Close": "Close"}, inplace=True)
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
 
-        return df
+    for attempt in range(3):
+        try:
+            res = requests.get(url, headers=headers)
 
-    except Exception as e:
-        print(symbol, "Error:", e)
-        return None
+            if res.status_code != 200:
+                print(symbol, "Failed attempt", attempt+1)
+                time.sleep(2)
+                continue
+
+            tables = pd.read_html(res.text)
+
+            if not tables:
+                print(symbol, "No table ❌")
+                return None
+
+            df = tables[0]
+
+            df = df.rename(columns={"Price": "Close"})
+            df["Date"] = pd.to_datetime(df["Date"])
+            df = df.sort_values("Date")
+
+            df["Close"] = df["Close"].astype(str).str.replace(",", "").astype(float)
+
+            return df
+
+        except Exception as e:
+            print(symbol, "Error:", e)
+            time.sleep(2)
+
+    return None
 
 def analyze(stock):
     df = get_data(stock)
