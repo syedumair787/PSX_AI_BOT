@@ -203,7 +203,7 @@ def run_bot():
     if not top_sell:
        message += "No SELL signals ⚠️\n"
     else:
-    for r in top_sell:
+        for r in top_sell:
         message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
 message += "\n💼 YOUR PORTFOLIO:\n"
 for p in portfolio_report:
