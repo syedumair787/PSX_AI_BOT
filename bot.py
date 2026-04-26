@@ -180,14 +180,28 @@ def load_portfolio():
 
 def run_bot():
     results = []
-
+    top_buy = []
+    top_sell = []
     for stock in STOCKS:
-        try:
-            r = analyze(stock)
-            if r:
-                results.append(r)
-        except:
-            continue
+    try:
+        r = analyze(stock)
+
+        if r:
+            score = r["score"]
+
+            # REAL LOGIC
+            if score >= 2:
+                r["signal"] = "BUY 🔥"
+                r["confidence"] = min(score * 20, 90)
+                top_buy.append(r)
+
+            elif score <= -2:
+                r["signal"] = "SELL ⚠️"
+                r["confidence"] = min(abs(score) * 20, 90)
+                top_sell.append(r)
+
+    except:
+        continue
 
     results = sorted(results, key=lambda x: x['score'], reverse=True)
 
