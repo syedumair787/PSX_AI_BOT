@@ -174,6 +174,10 @@ def analyze_portfolio(portfolio):
 
     return results
 
+def load_portfolio():
+    with open("portfolio.json") as f:
+        return json.load(f)
+
 def run_bot():
     results = []
 
