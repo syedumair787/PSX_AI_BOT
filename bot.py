@@ -193,15 +193,15 @@ def run_bot():
     portfolio = load_portfolio()
     portfolio_report = analyze_portfolio(portfolio)
 
-message = "📊 PSX FINAL REPORT\n\n"
-message += "🟢 TOP BUY:\n"
+             message = "📊 PSX FINAL REPORT\n\n"
+             message += "🟢 TOP BUY:\n"
 if not top_buy:
     message += "No BUY signals ⚠️\n"
 else:
     for r in top_buy:
         message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
 
-message += "\n🔴 TOP SELL:\n"
+            message += "\n🔴 TOP SELL:\n"
 if not top_sell:
     message += "No SELL signals ⚠️\n"
 else:
