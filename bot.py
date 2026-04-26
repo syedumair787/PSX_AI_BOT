@@ -24,17 +24,22 @@ STOCKS = [
 ]
 
 def get_data(symbol):
-    url = f"https://financialmodelingprep.com/api/v3/historical-price-full/{symbol}.KAR?apikey=demo"
-    res = requests.get(url).json()
-    data = res.get("historical", [])
-    df = pd.DataFrame(data)
+       try:
+        url = f"https://stooq.com/q/d/l/?s={symbol.lower()}.pk&i=d"
+        df = pd.read_csv(url)
 
-    if df.empty:
+        if df.empty:
+            print(symbol, "No Data ❌")
+            return None
+
+        df = df.sort_values("Date")
+        df.rename(columns={"Close": "Close"}, inplace=True)
+
+        return df
+
+    except Exception as e:
+        print(symbol, "Error:", e)
         return None
-
-    df = df.rename(columns={"close": "Close"})
-    df = df.sort_values("date")
-    return df
 
 def analyze(stock):
     df = get_data(stock)
