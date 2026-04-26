@@ -22,7 +22,29 @@ STOCKS = [
 "ENGRO","OGDC","HBL","PSO","UBL","MCB","LUCK","FFC","POL","SNGP",
 "SYS","TRG","PIOC","DGKC","BAHL","EFERT","HUBC","NML","NBP","KEL"
 ]
-
+SYMBOL_MAP = {
+    "UBL": "united-bank-ltd",
+    "HBL": "habib-bank-ltd",
+    "MEBL": "meezan-bank"
+    "ENGRO": "engro-corp",
+    "PSO": "pakistan-state-oil",
+    "MCB": "mcb-bank",
+    "LUCK": "lucky-cement",
+    "FFC": "fauji-fertilizer",
+    "POL": "pakistan-oilfields",
+    "OGDC": "oil-and-gas-development",
+    "SNGP": "sui-northern-gas",
+    "SYS": "systems-ltd",
+    "TRG": "trg-pakistan",
+    "PIOC": "piochre-pakistan",
+    "DGKC": "dg-khan-cement",
+    "BAHL": "bank-alfalah",
+    "EFERT": "engro-fertilizers",
+    "HUBC": "hub-power",
+    "NML": "nishat-mills",
+    "NBP": "national-bank-pakistan",
+    "KEL": "k-electric"
+}
 def get_data(symbol):
     import time
 
