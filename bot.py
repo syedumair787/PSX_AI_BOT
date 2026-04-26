@@ -25,7 +25,7 @@ STOCKS = [
 SYMBOL_MAP = {
     "UBL": "united-bank-ltd",
     "HBL": "habib-bank-ltd",
-    "MEBL": "meezan-bank"
+    "MEBL": "meezan-bank",
     "ENGRO": "engro-corp",
     "PSO": "pakistan-state-oil",
     "MCB": "mcb-bank",
