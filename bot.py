@@ -143,14 +143,14 @@ def run_bot():
     portfolio_report = analyze_portfolio(portfolio)
 
     message = "📊 PSX FINAL REPORT\n\n"
-    
-message += "🟢 TOP BUY:\n"    
-for r in top_buy:
-    message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
 
-message += "\n🔴 TOP SELL:\n"
-for r in top_sell:
-    message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
+    message += "🟢 TOP BUY:\n"
+    for r in top_buy:
+        message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
+
+    message += "\n🔴 TOP SELL:\n"
+    for r in top_sell:
+        message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
     
     message += "\n💼 YOUR PORTFOLIO:\n"
     for p in portfolio_report:
