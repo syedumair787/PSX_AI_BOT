@@ -24,7 +24,6 @@ STOCKS = [
 ]
 
 def get_data(symbol):
-     def get_data(symbol):
     try:
         url = f"https://stooq.com/q/d/l/?s={symbol.lower()}.pk&i=d"
         df = pd.read_csv(url)
