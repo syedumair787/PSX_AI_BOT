@@ -204,11 +204,6 @@ def run_bot():
     print("Error:", e)
     continue
 
-    results = sorted(results, key=lambda x: x['score'], reverse=True)
-
-    top_buy = [r for r in results if r['signal']=="BUY"][:5]
-    top_sell = [r for r in results if r['signal']=="SELL"][:5]
-
     portfolio = load_portfolio()
     portfolio_report = analyze_portfolio(portfolio)
 
