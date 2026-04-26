@@ -183,11 +183,11 @@ def run_bot():
     top_buy = []
     top_sell = []
     for stock in STOCKS:
-    try:
-        r = analyze(stock)
+        try:
+            r = analyze(stock)
 
-        if r:
-            score = r["score"]
+            if r:
+                score = r["score"]
 
             # REAL LOGIC
             if score >= 2:
