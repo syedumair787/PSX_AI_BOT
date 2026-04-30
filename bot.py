@@ -194,7 +194,7 @@ def run_bot():
                   r["confidence"] = min(score * 20, 90)
                   top_buy.append(r)
 
-              elif score <= -2:
+               elif score <= -2:
                   r["signal"] = "SELL ⚠️"
                   r["confidence"] = min(abs(score) * 20, 90)
                   top_sell.append(r)
