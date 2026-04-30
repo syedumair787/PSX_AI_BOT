@@ -186,10 +186,8 @@ def run_bot():
         try:
             r = analyze(stock)
 
-            if r:
-                score = r["score"]
-
-            # REAL LOGIC
+        if r:
+            score = r["score"]
             if score >= 2:
                 r["signal"] = "BUY 🔥"
                 r["confidence"] = min(score * 20, 90)
