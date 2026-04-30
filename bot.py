@@ -189,7 +189,7 @@ def run_bot():
            if r:
                score = r["score"]
 
-              if score >= 2:
+               if score >= 2:
                   r["signal"] = "BUY 🔥"
                   r["confidence"] = min(score * 20, 90)
                   top_buy.append(r)
