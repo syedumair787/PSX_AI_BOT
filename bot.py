@@ -182,26 +182,26 @@ def run_bot():
     results = []
     top_buy = []
     top_sell = []
-    for stock in STOCKS:
-       try:
-           r = analyze(stock)
+for stock in STOCKS:
+    try:
+        r = analyze(stock)
 
-           if r:
-               score = r["score"]
+        if r:
+            score = r["score"]
 
-               if score >= 2:
-                  r["signal"] = "BUY 🔥"
-                  r["confidence"] = min(score * 20, 90)
-                  top_buy.append(r)
+            if score >= 2:
+                r["signal"] = "BUY 🔥"
+                r["confidence"] = min(score * 20, 90)
+                top_buy.append(r)
 
-               elif score <= -2:
-                  r["signal"] = "SELL ⚠️"
-                  r["confidence"] = min(abs(score) * 20, 90)
-                  top_sell.append(r)
+            elif score <= -2:
+                r["signal"] = "SELL ⚠️"
+                r["confidence"] = min(abs(score) * 20, 90)
+                top_sell.append(r)
 
-         except Exception as e:
-            print("Error:", e)
-            continue
+    except Exception as e:
+        print("Error:", e)
+        continue    
 
     portfolio = load_portfolio()
     portfolio_report = analyze_portfolio(portfolio)
