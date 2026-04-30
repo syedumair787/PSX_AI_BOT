@@ -183,11 +183,13 @@ def run_bot():
     top_buy = []
     top_sell = []
     for stock in STOCKS:
-        try:
-            r = analyze(stock)
+    try:
+        r = analyze(stock)
 
         if r:
             score = r["score"]
+
+            # REAL LOGIC
             if score >= 2:
                 r["signal"] = "BUY 🔥"
                 r["confidence"] = min(score * 20, 90)
@@ -199,8 +201,8 @@ def run_bot():
                 top_sell.append(r)
 
     except Exception as e:
-    print("Error:", e)
-    continue
+        print("Error:", e)
+        continue
 
     portfolio = load_portfolio()
     portfolio_report = analyze_portfolio(portfolio)
