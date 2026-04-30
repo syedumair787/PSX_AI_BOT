@@ -209,7 +209,6 @@ def run_bot():
 
     message = "📊 PSX FINAL REPORT\n\n"
 
-    # 🟢 TOP BUY
     message += "🟢 TOP BUY:\n"
     if not top_buy:
         message += "No BUY signals ⚠️\n"
@@ -217,7 +216,6 @@ def run_bot():
         for r in top_buy:
             message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
 
-    # 🔴 TOP SELL
     message += "\n🔴 TOP SELL:\n"
     if not top_sell:
         message += "No SELL signals ⚠️\n"
@@ -225,7 +223,6 @@ def run_bot():
         for r in top_sell:
             message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
 
-    # 💼 PORTFOLIO
     message += "\n💼 YOUR PORTFOLIO:\n"
     for p in portfolio_report:
         message += p + "\n"
