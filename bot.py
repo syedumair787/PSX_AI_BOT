@@ -199,9 +199,9 @@ def run_bot():
                   r["confidence"] = min(abs(score) * 20, 90)
                   top_sell.append(r)
 
-    except Exception as e:
-        print("Error:", e)
-        continue
+        except Exception as e:
+            print("Error:", e)
+            continue
 
     portfolio = load_portfolio()
     portfolio_report = analyze_portfolio(portfolio)
