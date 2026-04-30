@@ -199,7 +199,7 @@ def run_bot():
                   r["confidence"] = min(abs(score) * 20, 90)
                   top_sell.append(r)
 
-        except Exception as e:
+         except Exception as e:
             print("Error:", e)
             continue
 
