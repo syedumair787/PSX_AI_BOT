@@ -45,46 +45,23 @@ SYMBOL_MAP = {
     "NBP": "national-bank-pakistan",
     "KEL": "k-electric"
 }
+import yfinance as yf
+
 def get_data(symbol):
-    import time
+    try:
+        ticker = symbol + ".KAR"
+        df = yf.download(ticker, period="3mo", interval="1d")
 
-    name = SYMBOL_MAP.get(symbol, symbol.lower())
-    url = f"https://www.investing.com/equities/{name}-historical-data"
+        if df is None or df.empty:
+            print(symbol, "No data ❌")
+            return None
 
-    headers = {
-        "User-Agent": "Mozilla/5.0"
-    }
+        df = df.reset_index()
+        return df
 
-    for attempt in range(3):
-        try:
-            res = requests.get(url, headers=headers)
-
-            if res.status_code != 200:
-                print(symbol, "Failed attempt", attempt+1)
-                time.sleep(2)
-                continue
-
-            tables = pd.read_html(res.text)
-
-            if not tables:
-                print(symbol, "No table ❌")
-                return None
-
-            df = tables[0]
-
-            df = df.rename(columns={"Price": "Close"})
-            df["Date"] = pd.to_datetime(df["Date"])
-            df = df.sort_values("Date")
-
-            df["Close"] = df["Close"].astype(str).str.replace(",", "").astype(float)
-
-            return df
-
-        except Exception as e:
-            print(symbol, "Error:", e)
-            time.sleep(2)
-
-    return None
+    except Exception as e:
+        print(symbol, "Error:", e)
+        return None        
 
 def analyze(stock):
     df = get_data(stock)
