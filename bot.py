@@ -45,18 +45,22 @@ SYMBOL_MAP = {
     "NBP": "national-bank-pakistan",
     "KEL": "k-electric"
 }
-import yfinance as yf
+API_KEY = "8873bafdbf1440bdac93725a409ebc15"
 
 def get_data(symbol):
     try:
-        ticker = symbol + ".KAR"
-        df = yf.download(ticker, period="3mo", interval="1d")
+        url = f"https://api.twelvedata.com/time_series?symbol={symbol}.KAR&interval=1day&outputsize=100&apikey={API_KEY}"
+        res = requests.get(url).json()
 
-        if df is None or df.empty:
-            print(symbol, "No data ❌")
+        if "values" not in res:
+            print(symbol, "No data ❌", res)
             return None
 
-        df = df.reset_index()
+        df = pd.DataFrame(res["values"])
+        df["datetime"] = pd.to_datetime(df["datetime"])
+        df = df.sort_values("datetime")
+
+        df["Close"] = df["close"].astype(float)
         return df
 
     except Exception as e:
