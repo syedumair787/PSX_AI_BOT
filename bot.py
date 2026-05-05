@@ -164,7 +164,7 @@ def run_bot():
     top_buy = []
     top_sell = []
 
-    for stock in STOCKS:
+for stock in STOCKS:
     try:
         r = analyze(stock)
 
@@ -191,9 +191,9 @@ def run_bot():
                     r["confidence"] = 50
                     top_sell.append(r)
 
-         except Exception as e:
-         print("Error:", e)
-         continue
+    except Exception as e:
+        print("Error:", e)
+        continue   
 
     portfolio = load_portfolio()
     portfolio_report = analyze_portfolio(portfolio)
