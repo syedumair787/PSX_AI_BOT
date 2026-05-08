@@ -166,70 +166,19 @@ def analyze_portfolio(portfolio):
 
     return results
 
-def load_portfolio():
-    with open("portfolio.json") as f:
-        return json.load(f)
-
 def run_bot():
-    results = []
-    top_buy = []
-    top_sell = []
 
-    for stock in STOCKS:
-        try:
-            r = analyze(stock)
-
-            if r:
-                score = r["score"]
-
-                if score >= 2:
-                    r["signal"] = "BUY 🔥"
-                    r["confidence"] = min(score * 20, 90)
-                    top_buy.append(r)
-
-                elif score <= -2:
-                    r["signal"] = "SELL ⚠️"
-                    r["confidence"] = min(abs(score) * 20, 90)
-                    top_sell.append(r)
-
-                else:
-                    if score >= 0:
-                        r["signal"] = "BUY 🔥"
-                        r["confidence"] = 50
-                        top_buy.append(r)
-                    else:
-                        r["signal"] = "SELL ⚠️"
-                        r["confidence"] = 50
-                        top_sell.append(r)
-
-        except Exception as e:
-            print("Error:", e)
-            continue
-
-    portfolio = load_portfolio()
     portfolio_report = analyze_portfolio(portfolio)
 
-    message = "📊 PSX FINAL REPORT\n\n"
+    message = "📊 AI PORTFOLIO REPORT\n\n"
 
-    message += "🟢 TOP BUY:\n"
-    if not top_buy:
-        message += "No BUY signals ⚠️\n"
-    else:
-        for r in top_buy:
-            message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
-
-    message += "\n🔴 TOP SELL:\n"
-    if not top_sell:
-        message += "No SELL signals ⚠️\n"
-    else:
-        for r in top_sell:
-            message += f"{r['stock']} | Price:{r['price']} | Score:{r['score']} | Conf:{r['confidence']}%\n"
-
-    message += "\n💼 YOUR PORTFOLIO:\n"
     for p in portfolio_report:
         message += p + "\n"
 
     send_telegram(message)
 
+
 if __name__ == "__main__":
     run_bot()
+
+
