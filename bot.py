@@ -288,17 +288,19 @@ def analyze_portfolio(portfolio):
             emoji = "🟢"
         else:
             emoji = "🔴"
-
+        news = get_news(stock, sector)
         results.append(
             f"{emoji} {stock} → {action}\n"
             f"Profit: {round(percent,2)}%\n"
             f"Target: {target}\n"
             f"SL: {stop_loss}\n"
             f"Risk: {risk}\n"
+            f"Sector Sentiment: {sentiment}\n"
             f"Reason: {reason}\n"
+            f"News: {news}\n"
             f"Confidence: {confidence}%\n"
         )
-
+        
     # SORT RANKING
 
     ranking.sort(key=lambda x: x[1], reverse=True)
@@ -328,6 +330,17 @@ def analyze_portfolio(portfolio):
             f"{i}. {r[0]} ({round(r[1],2)}%)\n"
         )
 
+    ai_summary = generate_ai_summary(total_profit)
+
+    warnings = diversification_check(portfolio)
+
+    warning_text = ""
+
+    for w in warnings:
+        warning_text += w + "\n"
+
+    results.insert(0, warning_text)
+    results.insert(0, ai_summary)
     results.insert(0, ranking_text)
     results.insert(0, summary)
 
