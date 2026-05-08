@@ -434,7 +434,7 @@ def analyze_portfolio(portfolio):
    results.insert(0, ranking_text)
    results.insert(0, summary)
 
-    return results
+   return results
 
         
 
