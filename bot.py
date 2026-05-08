@@ -89,10 +89,26 @@ portfolio = {
         "sector": "banking"
     }
 }
+def save_history(total_profit):
+
+    with open("history.txt", "a") as f:
+        f.write(f"{total_profit}\n")
+
 def analyze_portfolio(portfolio):
 
     results = []
+
+    total_investment = 0
+    current_value = 0
     total_profit = 0
+
+    best_stock = ""
+    best_percent = -999
+
+    worst_stock = ""
+    worst_percent = 999
+
+    ranking = []
 
     for stock, info in portfolio.items():
 
@@ -101,10 +117,29 @@ def analyze_portfolio(portfolio):
         qty = info["qty"]
         sector = info["sector"]
 
-        profit = (current_price - buy_price) * qty
+        investment = buy_price * qty
+        value = current_price * qty
+
+        profit = value - investment
         percent = ((current_price - buy_price) / buy_price) * 100
 
+        total_investment += investment
+        current_value += value
         total_profit += profit
+
+        ranking.append((stock, percent))
+
+        # BEST/WORST STOCK
+
+        if percent > best_percent:
+            best_percent = percent
+            best_stock = stock
+
+        if percent < worst_percent:
+            worst_percent = percent
+            worst_stock = stock
+
+        # TARGET & SL
 
         stop_loss = round(buy_price * 0.95, 2)
         target = round(buy_price * 1.10, 2)
@@ -135,7 +170,7 @@ def analyze_portfolio(portfolio):
             confidence = 60
             reason = "Temporary weakness"
 
-        # Sector intelligence
+        # SECTOR LOGIC
 
         if sector == "banking":
             confidence += 5
@@ -153,18 +188,69 @@ def analyze_portfolio(portfolio):
             confidence -= 3
             reason += " | Cement sector weak"
 
+        # RISK METER
+
+        if percent < -15:
+            risk = "HIGH RISK"
+
+        elif percent < -5:
+            risk = "MEDIUM RISK"
+
+        else:
+            risk = "LOW RISK"
+
+        # EMOJI
+
+        if percent >= 0:
+            emoji = "🟢"
+        else:
+            emoji = "🔴"
+
         results.append(
-            f"{stock} → {action}\n"
+            f"{emoji} {stock} → {action}\n"
             f"Profit: {round(percent,2)}%\n"
             f"Target: {target}\n"
             f"SL: {stop_loss}\n"
+            f"Risk: {risk}\n"
             f"Reason: {reason}\n"
             f"Confidence: {confidence}%\n"
         )
 
-    results.append(f"💰 TOTAL PROFIT: {round(total_profit,2)} PKR")
+    # SORT RANKING
+
+    ranking.sort(key=lambda x: x[1], reverse=True)
+
+    # SAVE DAILY HISTORY
+
+    save_history(round(total_profit,2))
+
+    # SUMMARY
+
+    summary = (
+        f"📈 PORTFOLIO SUMMARY\n"
+        f"💰 Total Investment: {round(total_investment,2)} PKR\n"
+        f"💵 Current Value: {round(current_value,2)} PKR\n"
+        f"📊 Net Profit: {round(total_profit,2)} PKR\n"
+        f"📈 Best Performer: {best_stock} ({round(best_percent,2)}%)\n"
+        f"📉 Worst Performer: {worst_stock} ({round(worst_percent,2)}%)\n\n"
+    )
+
+    # RANKING
+
+    ranking_text = "🏆 PORTFOLIO RANKING\n"
+
+    for i, r in enumerate(ranking, start=1):
+
+        ranking_text += (
+            f"{i}. {r[0]} ({round(r[1],2)}%)\n"
+        )
+
+    results.insert(0, ranking_text)
+    results.insert(0, summary)
 
     return results
+
+        
 
 def run_bot():
 
