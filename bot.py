@@ -45,113 +45,124 @@ SYMBOL_MAP = {
     "NBP": "national-bank-pakistan",
     "KEL": "k-electric"
 }
-API_KEY = "8873bafdbf1440bdac93725a409ebc15"
 
-def get_data(symbol):
-    try:
-        url = f"https://api.twelvedata.com/time_series?symbol={symbol}.KAR&interval=1day&outputsize=100&apikey={API_KEY}"
-        res = requests.get(url).json()
+portfolio = {
+    "FATIMA": {
+        "buy_price": 141.86,
+        "current_price": 137.43,
+        "qty": 500,
+        "sector": "fertilizer"
+    },
 
-        if "values" not in res:
-            print(symbol, "No data ❌", res)
-            return None
+    "HBL": {
+        "buy_price": 289.43,
+        "current_price": 295.26,
+        "qty": 600,
+        "sector": "banking"
+    },
 
-        df = pd.DataFrame(res["values"])
-        df["datetime"] = pd.to_datetime(df["datetime"])
-        df = df.sort_values("datetime")
+    "MEBL": {
+        "buy_price": 430.65,
+        "current_price": 485.95,
+        "qty": 610,
+        "sector": "banking"
+    },
 
-        df["Close"] = df["close"].astype(float)
-        return df
+    "MLCF": {
+        "buy_price": 106.59,
+        "current_price": 88.96,
+        "qty": 750,
+        "sector": "cement"
+    },
 
-    except Exception as e:
-        print(symbol, "Error:", e)
-        return None        
+    "SYS": {
+        "buy_price": 149.34,
+        "current_price": 153.89,
+        "qty": 345,
+        "sector": "technology"
+    },
 
-def analyze(stock):
-    df = get_data(stock)
-
-    if df is None or len(df) < 30:
-        print(stock, "Using fallback data")
-        df = pd.DataFrame({
-            "Date": pd.date_range(end=pd.Timestamp.today(), periods=50),
-            "Close": [100 + i for i in range(50)]
-        })
-
-    df['MA5'] = df['Close'].rolling(5).mean()
-    df['MA20'] = df['Close'].rolling(20).mean()
-    df['RSI'] = ta.momentum.RSIIndicator(df['Close'], window=14).rsi()
-
-    last = df.iloc[-1]
-    prev = df.iloc[-2]
-
-    score = 0
-
-    if last['MA5'] > last['MA20']:
-        score += 2
-    else:
-        score -= 2
-
-    if 30 < last['RSI'] < 40:
-        score += 2
-    elif last['RSI'] > 65:
-        score -= 2
-
-    if last['Close'] > prev['Close']:
-        score += 1
-    else:
-        score -= 1
-
-    confidence = min(max((score + 5) * 10, 0), 100)
-
-    if score >= 2:
-        signal = "BUY"
-    elif score <= -2:
-        signal = "SELL"
-    else:
-        signal = "HOLD"
-
-    return {
-        "stock": stock,
-        "signal": signal,
-        "score": score,
-        "confidence": confidence,
-        "price": round(last['Close'],2),
-        "RSI": round(last['RSI'],2)
+    "UBL": {
+        "buy_price": 392.08,
+        "current_price": 415.22,
+        "qty": 250,
+        "sector": "banking"
     }
-
+}
 def analyze_portfolio(portfolio):
+
     results = []
     total_profit = 0
 
     for stock, info in portfolio.items():
-        buy_price = info["price"]
+
+        buy_price = info["buy_price"]
+        current_price = info["current_price"]
         qty = info["qty"]
-
-        df = get_data(stock)
-        if df is None:
-            continue
-
-        current_price = df.iloc[-1]['Close']
+        sector = info["sector"]
 
         profit = (current_price - buy_price) * qty
         percent = ((current_price - buy_price) / buy_price) * 100
 
         total_profit += profit
 
-        stop_loss = buy_price * 0.95
+        stop_loss = round(buy_price * 0.95, 2)
+        target = round(buy_price * 1.10, 2)
 
+        confidence = 65
         action = "HOLD"
+        reason = ""
 
-        if current_price < stop_loss:
-            action = "SELL (Stop-Loss)"
-        elif percent > 5:
-            action = "SELL (Profit)"
+        # AI STYLE LOGIC
+
+        if percent > 10:
+            action = "SELL PARTIAL"
+            confidence = 78
+            reason = "Strong profit booked"
+
+        elif percent > 3:
+            action = "HOLD"
+            confidence = 72
+            reason = "Uptrend remains healthy"
+
+        elif percent < -10:
+            action = "BUY MORE"
+            confidence = 70
+            reason = "Stock heavily discounted"
+
+        elif percent < -5:
+            action = "HOLD"
+            confidence = 60
+            reason = "Temporary weakness"
+
+        # Sector intelligence
+
+        if sector == "banking":
+            confidence += 5
+            reason += " | Banking sector improving"
+
+        elif sector == "fertilizer":
+            confidence += 3
+            reason += " | Fertilizer sector stable"
+
+        elif sector == "technology":
+            confidence += 4
+            reason += " | IT exports improving"
+
+        elif sector == "cement":
+            confidence -= 3
+            reason += " | Cement sector weak"
 
         results.append(
-            f"{stock} | Qty:{qty} | Buy:{buy_price} | Now:{round(current_price,2)} | {round(percent,2)}% | Profit:{round(profit,2)} | SL:{round(stop_loss,2)} → {action}"
+            f"{stock} → {action}\n"
+            f"Profit: {round(percent,2)}%\n"
+            f"Target: {target}\n"
+            f"SL: {stop_loss}\n"
+            f"Reason: {reason}\n"
+            f"Confidence: {confidence}%\n"
         )
 
-    results.append(f"\n💰 TOTAL PROFIT: {round(total_profit,2)} PKR")
+    results.append(f"💰 TOTAL PROFIT: {round(total_profit,2)} PKR")
 
     return results
 
