@@ -94,6 +94,71 @@ def save_history(total_profit):
     with open("history.txt", "a") as f:
         f.write(f"{total_profit}\n")
 
+SECTOR_SENTIMENT = {
+    "banking": "BULLISH",
+    "fertilizer": "STABLE",
+    "technology": "STRONG",
+    "cement": "BEARISH"
+}
+
+def get_news(stock, sector):
+
+    if sector == "banking":
+        return "Banking sector improving after policy stability"
+
+    elif sector == "technology":
+        return "IT exports showing positive momentum"
+
+    elif sector == "cement":
+        return "Cement sector facing weak dispatches"
+
+    elif sector == "fertilizer":
+        return "Fertilizer demand remains stable"
+
+    return "Market conditions neutral"
+
+def generate_ai_summary(total_profit):
+
+    if total_profit > 0:
+        return (
+            "🤖 DAILY AI SUMMARY\n"
+            "Market sentiment improving.\n"
+            "Portfolio remains in healthy condition.\n"
+            "Recommended: Hold strong positions.\n"
+        )
+
+    else:
+        return (
+            "🤖 DAILY AI SUMMARY\n"
+            "Market showing weakness.\n"
+            "Risk management advised.\n"
+            "Avoid aggressive buying.\n"
+        )
+
+def diversification_check(portfolio):
+
+    sectors = {}
+
+    for stock, info in portfolio.items():
+
+        sector = info["sector"]
+
+        if sector not in sectors:
+            sectors[sector] = 0
+
+        sectors[sector] += 1
+
+    warnings = []
+
+    for sector, count in sectors.items():
+
+        if count >= 3:
+            warnings.append(
+                f"⚠ High exposure in {sector} sector"
+            )
+
+    return warnings
+
 def analyze_portfolio(portfolio):
 
     results = []
@@ -126,7 +191,7 @@ def analyze_portfolio(portfolio):
         total_investment += investment
         current_value += value
         total_profit += profit
-
+        
         ranking.append((stock, percent))
 
         # BEST/WORST STOCK
@@ -144,10 +209,10 @@ def analyze_portfolio(portfolio):
         stop_loss = round(buy_price * 0.95, 2)
         target = round(buy_price * 1.10, 2)
 
-        confidence = 65
+        confidence = 50
         action = "HOLD"
         reason = ""
-
+        sentiment = SECTOR_SENTIMENT.get(sector, "NEUTRAL")
         # AI STYLE LOGIC
 
         if percent > 10:
@@ -169,6 +234,24 @@ def analyze_portfolio(portfolio):
             action = "HOLD"
             confidence = 60
             reason = "Temporary weakness"
+
+        # DYNAMIC AI CONFIDENCE
+
+        if percent > 10:
+           confidence += 20
+
+        elif percent > 5:
+             confidence += 15
+
+        elif percent > 0:
+             confidence += 8
+
+        elif percent < -10:
+             confidence -= 10
+
+
+        if percent > 10:
+          action = "SELL PARTIAL"    
 
         # SECTOR LOGIC
 
