@@ -426,15 +426,15 @@ def analyze_portfolio(portfolio):
     for w in warnings:
         warning_text += w + "\n"
 
-   results.insert(0, daily_tracker)
-   results.insert(0, allocation)
-   results.insert(0, health_text)
-   results.insert(0, warning_text)
-   results.insert(0, ai_summary)
-   results.insert(0, ranking_text)
-   results.insert(0, summary)
+    results.insert(0, daily_tracker)
+    results.insert(0, allocation)
+    results.insert(0, health_text)
+    results.insert(0, warning_text)
+    results.insert(0, ai_summary)
+    results.insert(0, ranking_text)
+    results.insert(0, summary)
 
-   return results
+    return results
 
         
 
