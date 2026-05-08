@@ -158,7 +158,85 @@ def diversification_check(portfolio):
             )
 
     return warnings
+def calculate_health_score(total_profit, ranking):
 
+    score = 50
+
+    if total_profit > 0:
+        score += 20
+
+    if len(ranking) >= 5:
+        score += 10
+
+    positive = 0
+
+    for stock, percent in ranking:
+
+        if percent > 0:
+            positive += 1
+
+    score += positive * 3
+
+    if score > 100:
+        score = 100
+
+    return score
+def portfolio_allocation(portfolio):
+
+    sectors = {}
+    total_value = 0
+
+    for stock, info in portfolio.items():
+
+        sector = info["sector"]
+
+        value = info["current_price"] * info["qty"]
+
+        total_value += value
+
+        if sector not in sectors:
+            sectors[sector] = 0
+
+        sectors[sector] += value
+
+    allocation_text = "📊 PORTFOLIO ALLOCATION\n"
+
+    for sector, value in sectors.items():
+
+        percent = (value / total_value) * 100
+
+        allocation_text += (
+            f"{sector.upper()}: {round(percent,2)}%\n"
+        )
+
+    return allocation_text
+def daily_change():
+
+    try:
+
+        with open("history.txt", "r") as f:
+
+            lines = f.readlines()
+
+        if len(lines) < 2:
+            return "📅 DAILY CHANGE\nNot enough history data.\n"
+
+        yesterday = float(lines[-2].strip())
+        today = float(lines[-1].strip())
+
+        change = today - yesterday
+
+        emoji = "📈" if change >= 0 else "📉"
+
+        return (
+            f"📅 DAILY CHANGE\n"
+            f"Yesterday Profit: {round(yesterday,2)} PKR\n"
+            f"Today Profit: {round(today,2)} PKR\n"
+            f"Change: {round(change,2)} PKR {emoji}\n"
+        )
+
+    except:
+        return "📅 DAILY CHANGE\nHistory unavailable.\n"
 def analyze_portfolio(portfolio):
 
     results = []
@@ -331,7 +409,16 @@ def analyze_portfolio(portfolio):
         )
 
     ai_summary = generate_ai_summary(total_profit)
+    
+    health_score = calculate_health_score(total_profit, ranking)
 
+    allocation = portfolio_allocation(portfolio)
+
+    daily_tracker = daily_change()
+    
+    health_text = (
+    f"🧠 AI HEALTH SCORE: {health_score}/100\n"
+    )
     warnings = diversification_check(portfolio)
 
     warning_text = ""
@@ -339,10 +426,13 @@ def analyze_portfolio(portfolio):
     for w in warnings:
         warning_text += w + "\n"
 
-    results.insert(0, warning_text)
-    results.insert(0, ai_summary)
-    results.insert(0, ranking_text)
-    results.insert(0, summary)
+   results.insert(0, daily_tracker)
+   results.insert(0, allocation)
+   results.insert(0, health_text)
+   results.insert(0, warning_text)
+   results.insert(0, ai_summary)
+   results.insert(0, ranking_text)
+   results.insert(0, summary)
 
     return results
 
