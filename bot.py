@@ -335,7 +335,9 @@ def get_live_price(symbol):
 
         print(f"Fetching live price for {symbol}")
 
-        print(soup.prettify()[:5000])
+        price_div = soup.find("div", class_="quote__close")
+
+        print(price_div)
 
         return None
 
