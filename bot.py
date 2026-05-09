@@ -372,6 +372,7 @@ def analyze_portfolio(portfolio):
         
         buy_price = info["buy_price"]
         current_price = live_price
+        print("LIVE PRICE USED:", current_price)
         qty = info["qty"]
         sector = info["sector"]
 
