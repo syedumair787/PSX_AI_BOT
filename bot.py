@@ -291,35 +291,18 @@ def fetch_market_news():
 
     try:
 
-        api_key = os.getenv("NEWS_API_KEY")
-        print("API KEY:", api_key)
+        feed_url = "https://feeds.finance.yahoo.com/rss/2.0/headline?s=%5EKSE&region=US&lang=en-US"
 
-        url = (
-            "https://newsapi.org/v2/everything?"
-            "q=PSX OR Pakistan stocks OR KSE-100&"
-            "language=en&"
-            "sortBy=publishedAt&"
-            f"apiKey={api_key}"
-        )
-
-        response = requests.get(url)
-
-        print(response.text)
-
-        data = response.json()
-
-        articles = data.get("articles", [])
-
-        if not articles:
-            return "📰 LATEST MARKET NEWS\n\nNo live market news found."
+        feed = feedparser.parse(feed_url)
 
         news_text = "📰 LATEST MARKET NEWS\n\n"
 
-        for article in articles[:5]:
+        if not feed.entries:
+            return news_text + "No live market news found."
 
-            title = article.get("title", "No title")
+        for entry in feed.entries[:5]:
 
-            news_text += f"• {title}\n"
+            news_text += f"• {entry.title}\n"
 
         return news_text
 
