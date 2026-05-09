@@ -544,6 +544,8 @@ def portfolio_chart(portfolio):
     plt.savefig("portfolio.png")
 
     plt.close()
+
+
 def run_bot():
 
     portfolio_report = analyze_portfolio(portfolio)
@@ -564,7 +566,9 @@ def run_bot():
             photo=photo
         )
 
+
 if __name__ == "__main__":
     run_bot()
+
 
 
