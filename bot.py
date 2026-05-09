@@ -525,7 +525,7 @@ def analyze_portfolio(portfolio):
 def run_bot():
 
     portfolio_report = analyze_portfolio(portfolio)
-
+    portfolio_chart(portfolio)
     message = "📊 AI PORTFOLIO REPORT\n\n"
 
     for p in portfolio_report:
