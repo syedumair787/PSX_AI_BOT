@@ -559,12 +559,15 @@ def run_bot():
 
     send_telegram(message)
 
+    url = f"https://api.telegram.org/bot{TOKEN}/sendPhoto"
+
     with open("portfolio.png", "rb") as photo:
 
-        bot.send_photo(
-            chat_id=CHAT_ID,
-            photo=photo
-        )
+        requests.post(
+         url,
+         data={"chat_id": CHAT_ID},
+         files={"photo": photo}
+       )
 
 
 if __name__ == "__main__":
