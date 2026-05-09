@@ -328,10 +328,29 @@ def analyze_portfolio(portfolio):
             worst_percent = percent
             worst_stock = stock
 
-        # TARGET & SL
+        # ADVANCED TARGET & STOP LOSS
 
-        stop_loss = round(buy_price * 0.95, 2)
-        target = round(buy_price * 1.10, 2)
+        if sector == "technology":
+
+            target = round(current_price * 1.15, 2)
+            stop_loss = round(current_price * 0.92, 2)
+
+        elif sector == "banking":
+
+            target = round(current_price * 1.10, 2)
+            stop_loss = round(current_price * 0.95, 2)
+
+        elif sector == "cement":
+
+            target = round(current_price * 1.06, 2)
+            stop_loss = round(current_price * 0.90, 2)
+
+        else:
+
+            target = round(current_price * 1.08, 2)
+            stop_loss = round(current_price * 0.94, 2)
+
+        
 
         confidence = 50
         action = "HOLD"
