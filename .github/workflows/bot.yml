@@ -22,3 +22,4 @@ jobs:
       env:
         TOKEN: ${{ secrets.TOKEN }}
         CHAT_ID: ${{ secrets.CHAT_ID }}
+        NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
