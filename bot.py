@@ -549,16 +549,16 @@ def analyze_portfolio(portfolio):
     for w in warnings:
         warning_text += w + "\n"
 
-    results.insert(0, live_news)
-    results.insert(0, market_status)
-    results.insert(0, alerts)
-    results.insert(0, daily_tracker)
-    results.insert(0, allocation)
-    results.insert(0, health_text)
-    results.insert(0, warning_text)
-    results.insert(0, ai_summary)
-    results.insert(0, ranking_text)
     results.insert(0, summary)
+    results.insert(1, ranking_text)
+    results.insert(2, ai_summary)
+    results.insert(3, warning_text)
+    results.insert(4, health_text)
+    results.insert(5, allocation)
+    results.insert(6, daily_tracker)
+    results.insert(7, alerts)
+    results.insert(8, market_status)
+    results.insert(9, live_news)
 
     return results
 
