@@ -360,6 +360,10 @@ def analyze_portfolio(portfolio):
 
     for stock, info in portfolio.items():
 
+        live_price = get_live_price(stock)
+
+        print(live_price)
+        
         buy_price = info["buy_price"]
         current_price = info["current_price"]
         qty = info["qty"]
