@@ -6,3 +6,4 @@ yfinance
 lxml
 html5lib
 matplotlib
+beautifulsoup4
