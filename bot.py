@@ -323,6 +323,25 @@ def fetch_market_news():
 
         return f"News Error: {e}"
 
+def get_live_price(symbol):
+
+    try:
+
+        url = f"https://dps.psx.com.pk/company/{symbol}"
+
+        response = requests.get(url)
+
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        print(f"Fetching live price for {symbol}")
+
+        return None
+
+    except Exception as e:
+
+        print(f"Price Error for {symbol}: {e}")
+
+        return None
 def analyze_portfolio(portfolio):
 
     results = []
