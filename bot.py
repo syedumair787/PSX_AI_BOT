@@ -291,13 +291,13 @@ def fetch_market_news():
 
     try:
 
-        feed_url = "https://feeds.finance.yahoo.com/rss/2.0/headline?s=%5EKSE&region=US&lang=en-US"
+        feed_url = "https://rss.app/feeds/AmeRmN5MSkkwKGXN.xml"
 
         feed = feedparser.parse(feed_url)
 
         news_text = "📰 LATEST MARKET NEWS\n\n"
 
-        if not feed.entries:
+        if len(feed.entries) == 0:
             return news_text + "No live market news found."
 
         for entry in feed.entries[:5]:
