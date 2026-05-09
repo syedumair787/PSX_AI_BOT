@@ -4,6 +4,7 @@ import ta
 import os
 import json
 import matplotlib.pyplot as plt
+from bs4 import BeautifulSoup
 from telegram import Bot
 
 TOKEN = os.getenv("TOKEN")
@@ -284,6 +285,46 @@ def market_mood(total_profit, ranking):
 
     else:
         return "📉 MARKET MOOD: BEARISH"
+def fetch_market_news():
+
+    try:
+
+        url = "https://profit.pakistantoday.com.pk"
+
+        response = requests.get(url)
+
+        soup = BeautifulSoup(
+            response.text,
+            "html.parser"
+        )
+
+        headlines = soup.find_all("h2")
+
+        news_text = "📰 LATEST MARKET NEWS\n\n"
+
+        count = 0
+
+        for h in headlines:
+
+            title = h.get_text(strip=True)
+
+            if len(title) > 20:
+
+                news_text += f"• {title}\n"
+
+                count += 1
+
+            if count == 5:
+                break
+
+        return news_text
+
+    except:
+
+        return (
+            "📰 LATEST MARKET NEWS\n"
+            "Unable to fetch live news.\n"
+        )
 def analyze_portfolio(portfolio):
 
     results = []
@@ -498,6 +539,8 @@ def analyze_portfolio(portfolio):
     
     market_status = market_mood(total_profit, ranking)
     
+    live_news = fetch_market_news()
+    
     health_text = (
     f"🧠 AI HEALTH SCORE: {health_score}/100\n"
     )
@@ -508,6 +551,7 @@ def analyze_portfolio(portfolio):
     for w in warnings:
         warning_text += w + "\n"
 
+    results.insert(0, live_news)
     results.insert(0, market_status)
     results.insert(0, alerts)
     results.insert(0, daily_tracker)
