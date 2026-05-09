@@ -291,16 +291,28 @@ def fetch_market_news():
 
     try:
 
-        url = "https://news.google.com/rss/search?q=Pakistan+Stock+Exchange"
+        api_key = os.getenv("NEWS_API_KEY")
 
-        feed = feedparser.parse(url)
-        print(feed.entries)
+        url = (
+            "https://newsapi.org/v2/everything?"
+            "q=Pakistan Stock Exchange&"
+            "sortBy=publishedAt&"
+            f"apiKey={api_key}"
+        )
+
+        response = requests.get(url)
+
+        data = response.json()
+
+        articles = data.get("articles", [])
 
         news_text = "📰 LATEST MARKET NEWS\n\n"
 
-        for entry in feed.entries[:5]:
+        for article in articles[:5]:
 
-            news_text += f"• {entry.title}\n"
+            title = article["title"]
+
+            news_text += f"• {title}\n"
 
         return news_text
 
