@@ -291,7 +291,7 @@ def fetch_market_news():
 
     try:
 
-        feed_url = "https://feeds.bbci.co.uk/news/business/rss.xml"
+        feed_url = "https://profit.pakistantoday.com.pk/feed/"
 
         feed = feedparser.parse(feed_url)
 
