@@ -406,6 +406,17 @@ def analyze_portfolio(portfolio):
         else:
             risk = "LOW RISK"
 
+        # RECOMMENDATION STRENGTH
+
+        if confidence >= 85:
+            strength = "HIGH CONVICTION"
+
+        elif confidence >= 70:
+            strength = "MODERATE CONVICTION"
+
+        else:
+            strength = "LOW CONVICTION"
+            
         # EMOJI
 
         if percent >= 0:
@@ -423,6 +434,7 @@ def analyze_portfolio(portfolio):
             f"Reason: {reason}\n"
             f"News: {news}\n"
             f"Confidence: {confidence}%\n"
+            f"Recommendation Strength: {strength}\n"
         )
         
     # SORT RANKING
