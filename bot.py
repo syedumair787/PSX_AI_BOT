@@ -289,39 +289,12 @@ def market_mood(total_profit, ranking):
 
 def fetch_market_news():
 
-    try:
-
-        api_key = os.getenv("NEWS_API_KEY")
-
-        url = (
-            "https://newsapi.org/v2/everything?"
-            "q=Pakistan Stock Exchange&"
-            "sortBy=publishedAt&"
-            f"apiKey={api_key}"
-        )
-
-        response = requests.get(url)
-
-        data = response.json()
-
-        articles = data.get("articles", [])
-
-        news_text = "📰 LATEST MARKET NEWS\n\n"
-
-        for article in articles[:5]:
-
-            title = article["title"]
-
-            news_text += f"• {title}\n"
-
-        return news_text
-
-    except Exception as e:
-
-        return (
-            "📰 LATEST MARKET NEWS\n"
-            f"News fetch failed: {e}"
-        )
+    return (
+        "📰 LATEST MARKET NEWS\n\n"
+        "• TEST NEWS 1\n"
+        "• TEST NEWS 2\n"
+        "• TEST NEWS 3\n"
+    )
 
 def analyze_portfolio(portfolio):
 
