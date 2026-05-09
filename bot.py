@@ -289,12 +289,42 @@ def market_mood(total_profit, ranking):
 
 def fetch_market_news():
 
-    return (
-        "📰 LATEST MARKET NEWS\n\n"
-        "• TEST NEWS 1\n"
-        "• TEST NEWS 2\n"
-        "• TEST NEWS 3\n"
-    )
+    try:
+
+        api_key = os.getenv("NEWS_API_KEY")
+
+        url = (
+            "https://newsapi.org/v2/everything?"
+            "q=Pakistan Stock Exchange&"
+            "language=en&"
+            "sortBy=publishedAt&"
+            f"apiKey={api_key}"
+        )
+
+        response = requests.get(url)
+
+        print(response.text)
+
+        data = response.json()
+
+        articles = data.get("articles", [])
+
+        if not articles:
+            return "📰 LATEST MARKET NEWS\n\nNo live market news found."
+
+        news_text = "📰 LATEST MARKET NEWS\n\n"
+
+        for article in articles[:5]:
+
+            title = article.get("title", "No title")
+
+            news_text += f"• {title}\n"
+
+        return news_text
+
+    except Exception as e:
+
+        return f"News Error: {e}"
 
 def analyze_portfolio(portfolio):
 
