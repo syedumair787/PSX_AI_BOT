@@ -532,7 +532,13 @@ def run_bot():
         message += p + "\n"
 
     send_telegram(message)
+    
+with open("portfolio.png", "rb") as photo:
 
+    bot.send_photo(
+        chat_id=CHAT_ID,
+        photo=photo
+    )
 
 if __name__ == "__main__":
     run_bot()
