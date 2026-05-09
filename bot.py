@@ -265,6 +265,24 @@ def smart_alerts(portfolio):
         return "✅ No major alerts"
 
     return "\n".join(alerts)
+    
+def market_mood(total_profit, ranking):
+
+    positive = 0
+
+    for stock, percent in ranking:
+
+        if percent > 0:
+            positive += 1
+
+    if total_profit > 0 and positive >= 4:
+        return "📈 MARKET MOOD: BULLISH"
+
+    elif total_profit > 0:
+        return "📊 MARKET MOOD: MODERATELY BULLISH"
+
+    else:
+        return "📉 MARKET MOOD: BEARISH"
 def analyze_portfolio(portfolio):
 
     results = []
@@ -446,6 +464,8 @@ def analyze_portfolio(portfolio):
     
     alerts = smart_alerts(portfolio)
     
+    market_status = market_mood(total_profit, ranking)
+    
     health_text = (
     f"🧠 AI HEALTH SCORE: {health_score}/100\n"
     )
@@ -456,6 +476,8 @@ def analyze_portfolio(portfolio):
     for w in warnings:
         warning_text += w + "\n"
 
+    results.insert(0, market_status)
+    results.insert(0, alerts)
     results.insert(0, daily_tracker)
     results.insert(0, allocation)
     results.insert(0, health_text)
