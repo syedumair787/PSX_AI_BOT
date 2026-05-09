@@ -335,6 +335,8 @@ def get_live_price(symbol):
 
         print(f"Fetching live price for {symbol}")
 
+        print(soup.text[:1000])
+
         return None
 
     except Exception as e:
