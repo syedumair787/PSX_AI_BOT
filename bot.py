@@ -3,6 +3,7 @@ import requests
 import ta
 import os
 import json
+import matplotlib.pyplot as plt
 from telegram import Bot
 
 TOKEN = os.getenv("TOKEN")
