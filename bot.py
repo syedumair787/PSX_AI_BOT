@@ -291,12 +291,10 @@ def fetch_market_news():
 
     try:
 
-        url = (
-            "https://news.google.com/rss/"
-            "search?q=Pakistan+Stock+Exchange"
-        )
+        url = "https://news.google.com/rss/search?q=Pakistan+Stock+Exchange"
 
         feed = feedparser.parse(url)
+        print(feed.entries)
 
         news_text = "📰 LATEST MARKET NEWS\n\n"
 
