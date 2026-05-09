@@ -291,39 +291,47 @@ def fetch_market_news():
 
         url = "https://profit.pakistantoday.com.pk"
 
-        response = requests.get(url)
+        response = requests.get(
+            url,
+            headers={
+                "User-Agent": "Mozilla/5.0"
+            }
+        )
 
         soup = BeautifulSoup(
             response.text,
             "html.parser"
         )
 
-        headlines = soup.find_all("h2")
+        headlines = soup.find_all(["h2", "h3"])
 
         news_text = "📰 LATEST MARKET NEWS\n\n"
 
-        count = 0
+        added = []
 
         for h in headlines:
 
             title = h.get_text(strip=True)
 
-            if len(title) > 20:
+            if (
+                len(title) > 25
+                and title not in added
+            ):
 
                 news_text += f"• {title}\n"
 
-                count += 1
+                added.append(title)
 
-            if count == 5:
+            if len(added) == 5:
                 break
 
         return news_text
 
-    except:
+    except Exception as e:
 
         return (
             "📰 LATEST MARKET NEWS\n"
-            "Unable to fetch live news.\n"
+            f"News fetch failed: {e}"
         )
 def analyze_portfolio(portfolio):
 
