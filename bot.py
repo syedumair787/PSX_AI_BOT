@@ -300,9 +300,22 @@ def fetch_market_news():
         if len(feed.entries) == 0:
             return news_text + "No live market news found."
 
-        for entry in feed.entries[:5]:
+        keywords = ["PSX", "KSE", "stock", "bank", "cement", "fertilizer"]
 
-            news_text += f"• {entry.title}\n"
+count = 0
+
+for entry in feed.entries:
+
+    title = entry.title
+
+    if any(k.lower() in title.lower() for k in keywords):
+
+        news_text += f"• {title}\n"
+
+        count += 1
+
+    if count == 5:
+        break
 
         return news_text
 
