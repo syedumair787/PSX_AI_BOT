@@ -521,24 +521,48 @@ def analyze_portfolio(portfolio):
     return results
 
         
+def portfolio_chart(portfolio):
 
+    labels = []
+    sizes = []
+
+    for stock, info in portfolio.items():
+
+        labels.append(stock)
+        sizes.append(info["qty"])
+
+    plt.figure(figsize=(8,8))
+
+    plt.pie(
+        sizes,
+        labels=labels,
+        autopct='%1.1f%%'
+    )
+
+    plt.title("Portfolio Allocation")
+
+    plt.savefig("portfolio.png")
+
+    plt.close()
 def run_bot():
 
     portfolio_report = analyze_portfolio(portfolio)
+
     portfolio_chart(portfolio)
+
     message = "📊 AI PORTFOLIO REPORT\n\n"
 
     for p in portfolio_report:
         message += p + "\n"
 
     send_telegram(message)
-    
-with open("portfolio.png", "rb") as photo:
 
-    bot.send_photo(
-        chat_id=CHAT_ID,
-        photo=photo
-    )
+    with open("portfolio.png", "rb") as photo:
+
+        bot.send_photo(
+            chat_id=CHAT_ID,
+            photo=photo
+        )
 
 if __name__ == "__main__":
     run_bot()
