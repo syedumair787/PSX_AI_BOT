@@ -302,20 +302,20 @@ def fetch_market_news():
 
         keywords = ["PSX", "KSE", "stock", "bank", "cement", "fertilizer"]
 
-count = 0
+        count = 0
 
-for entry in feed.entries:
+        for entry in feed.entries:
 
-    title = entry.title
+            title = entry.title
 
-    if any(k.lower() in title.lower() for k in keywords):
+            if any(k.lower() in title.lower() for k in keywords):
 
-        news_text += f"• {title}\n"
+                news_text += f"• {title}\n"
 
-        count += 1
+                count += 1
 
-    if count == 5:
-        break
+            if count == 5:
+                break
 
         return news_text
 
