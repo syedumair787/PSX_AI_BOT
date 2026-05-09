@@ -292,6 +292,7 @@ def fetch_market_news():
     try:
 
         api_key = os.getenv("NEWS_API_KEY")
+        print("API KEY:", api_key)
 
         url = (
             "https://newsapi.org/v2/everything?"
