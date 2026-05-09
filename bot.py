@@ -296,7 +296,7 @@ def fetch_market_news():
 
         url = (
             "https://newsapi.org/v2/everything?"
-            "q=Pakistan Stock Exchange&"
+            "q=PSX OR Pakistan stocks OR KSE-100&"
             "language=en&"
             "sortBy=publishedAt&"
             f"apiKey={api_key}"
