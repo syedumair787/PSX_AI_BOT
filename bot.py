@@ -237,6 +237,34 @@ def daily_change():
 
     except:
         return "📅 DAILY CHANGE\nHistory unavailable.\n"
+def smart_alerts(portfolio):
+
+    alerts = []
+
+    for stock, info in portfolio.items():
+
+        buy_price = info["buy_price"]
+        current_price = info["current_price"]
+
+        percent = (
+            (current_price - buy_price)
+            / buy_price
+        ) * 100
+
+        if percent > 10:
+            alerts.append(
+                f"🔥 {stock} hitting strong profit zone"
+            )
+
+        elif percent < -15:
+            alerts.append(
+                f"⚠️ {stock} showing heavy losses"
+            )
+
+    if not alerts:
+        return "✅ No major alerts"
+
+    return "\n".join(alerts)
 def analyze_portfolio(portfolio):
 
     results = []
@@ -415,6 +443,8 @@ def analyze_portfolio(portfolio):
     allocation = portfolio_allocation(portfolio)
 
     daily_tracker = daily_change()
+    
+    alerts = smart_alerts(portfolio)
     
     health_text = (
     f"🧠 AI HEALTH SCORE: {health_score}/100\n"
