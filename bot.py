@@ -339,7 +339,9 @@ def get_live_price(symbol):
 
         print(price_div)
 
-        return None
+        price = price_div.text.replace("Rs.", "").strip()
+
+        return float(price)
 
     except Exception as e:
 
@@ -369,7 +371,7 @@ def analyze_portfolio(portfolio):
         print(live_price)
         
         buy_price = info["buy_price"]
-        current_price = info["current_price"]
+        current_price = live_price
         qty = info["qty"]
         sector = info["sector"]
 
