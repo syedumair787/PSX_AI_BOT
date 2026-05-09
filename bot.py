@@ -4,6 +4,7 @@ import ta
 import os
 import json
 import matplotlib.pyplot as plt
+import feedparser
 from bs4 import BeautifulSoup
 from telegram import Bot
 
@@ -285,45 +286,23 @@ def market_mood(total_profit, ranking):
 
     else:
         return "📉 MARKET MOOD: BEARISH"
+
 def fetch_market_news():
 
     try:
 
-        url = "https://profit.pakistantoday.com.pk"
-
-        response = requests.get(
-            url,
-            headers={
-                "User-Agent": "Mozilla/5.0"
-            }
+        url = (
+            "https://news.google.com/rss/"
+            "search?q=Pakistan+Stock+Exchange"
         )
 
-        soup = BeautifulSoup(
-            response.text,
-            "html.parser"
-        )
-
-        headlines = soup.find_all(["h2", "h3"])
+        feed = feedparser.parse(url)
 
         news_text = "📰 LATEST MARKET NEWS\n\n"
 
-        added = []
+        for entry in feed.entries[:5]:
 
-        for h in headlines:
-
-            title = h.get_text(strip=True)
-
-            if (
-                len(title) > 25
-                and title not in added
-            ):
-
-                news_text += f"• {title}\n"
-
-                added.append(title)
-
-            if len(added) == 5:
-                break
+            news_text += f"• {entry.title}\n"
 
         return news_text
 
@@ -333,6 +312,7 @@ def fetch_market_news():
             "📰 LATEST MARKET NEWS\n"
             f"News fetch failed: {e}"
         )
+
 def analyze_portfolio(portfolio):
 
     results = []
