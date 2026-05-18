@@ -67,14 +67,14 @@ portfolio = {
     "MEBL": {
         "buy_price": 430.65,
         "current_price": 485.95,
-        "qty": 610,
+        "qty": 680,
         "sector": "banking"
     },
 
     "MLCF": {
         "buy_price": 106.59,
         "current_price": 88.96,
-        "qty": 750,
+        "qty": 350,
         "sector": "cement"
     },
 
