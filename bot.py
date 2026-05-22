@@ -60,21 +60,28 @@ portfolio = {
     "HBL": {
         "buy_price": 289.43,
         "current_price": 295.26,
-        "qty": 600,
+        "qty": 500,
         "sector": "banking"
     },
 
+    "OGDC": {
+        "buy_price": 323.60,
+        "current_price": 295.26,
+        "qty": 100,
+        "sector": "oil and gas"
+    },
+    
     "MEBL": {
-        "buy_price": 430.65,
+        "buy_price": 439.87,
         "current_price": 485.95,
-        "qty": 680,
+        "qty": 750,
         "sector": "banking"
     },
 
     "MLCF": {
         "buy_price": 106.59,
         "current_price": 88.96,
-        "qty": 350,
+        "qty": 250,
         "sector": "cement"
     },
 
