@@ -125,6 +125,9 @@ def get_news(stock, sector):
     elif sector == "fertilizer":
         return "Fertilizer demand remains stable"
 
+    elif sector == "oil_and_gas":
+        return "Oil & Gas sector benefiting from higher energy prices"
+    
     return "Market conditions neutral"
 
 def generate_ai_summary(total_profit):
