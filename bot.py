@@ -525,6 +525,8 @@ def analyze_portfolio(portfolio):
         news = get_news(stock, sector)
         results.append(
             f"{emoji} {stock} → {action}\n"
+            f"Buy Price: {buy_price}\n"
+            f"Current Price: {round(current_price,2)}\n"
             f"Profit: {round(percent,2)}%\n"
             f"Target: {target}\n"
             f"SL: {stop_loss}\n"
