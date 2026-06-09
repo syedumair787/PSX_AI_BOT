@@ -92,6 +92,13 @@ portfolio = {
         "sector": "technology"
     },
 
+    "MCB": {
+        "buy_price": 404.50,
+        "current_price": 403.69,
+        "qty": 90,
+        "sector": "banking"
+    },
+
     "UBL": {
         "buy_price": 392.08,
         "current_price": 415.22,
