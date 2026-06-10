@@ -60,7 +60,7 @@ portfolio = {
     "HBL": {
         "buy_price": 289.43,
         "current_price": 295.26,
-        "qty": 500,
+        "qty": 300,
         "sector": "banking"
     },
 
@@ -72,9 +72,9 @@ portfolio = {
     },
     
     "MEBL": {
-        "buy_price": 439.87,
+        "buy_price": 443.28,
         "current_price": 485.95,
-        "qty": 750,
+        "qty": 800,
         "sector": "banking"
     },
 
@@ -93,16 +93,16 @@ portfolio = {
     },
 
     "MCB": {
-        "buy_price": 404.50,
+        "buy_price": 403.04,
         "current_price": 403.69,
-        "qty": 90,
+        "qty": 130,
         "sector": "banking"
     },
 
     "UBL": {
-        "buy_price": 392.08,
+        "buy_price": 393.53,
         "current_price": 415.22,
-        "qty": 250,
+        "qty": 300,
         "sector": "banking"
     }
 }
