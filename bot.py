@@ -72,9 +72,9 @@ portfolio = {
     },
     
     "MEBL": {
-        "buy_price": 443.28,
+        "buy_price": 447.48,
         "current_price": 485.95,
-        "qty": 800,
+        "qty": 850,
         "sector": "banking"
     },
 
