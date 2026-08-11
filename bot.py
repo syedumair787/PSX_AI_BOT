@@ -50,59 +50,31 @@ SYMBOL_MAP = {
 }
 
 portfolio = {
-    "FATIMA": {
-        "buy_price": 141.86,
+    "FFC": {
+        "buy_price": 554.49,
         "current_price": 137.43,
-        "qty": 500,
+        "qty": 150,
         "sector": "fertilizer"
-    },
-
-    "HBL": {
-        "buy_price": 289.43,
-        "current_price": 295.26,
-        "qty": 300,
-        "sector": "banking"
-    },
-
-    "OGDC": {
-        "buy_price": 323.60,
-        "current_price": 295.26,
-        "qty": 100,
-        "sector": "oil and gas"
     },
     
     "MEBL": {
-        "buy_price": 447.48,
+        "buy_price": 472.16,
         "current_price": 485.95,
-        "qty": 850,
+        "qty": 1050,
         "sector": "banking"
     },
 
-    "MLCF": {
-        "buy_price": 106.59,
-        "current_price": 88.96,
-        "qty": 250,
-        "sector": "cement"
-    },
-
-    "SYS": {
-        "buy_price": 149.34,
-        "current_price": 153.89,
-        "qty": 345,
-        "sector": "technology"
-    },
-
-    "MCB": {
-        "buy_price": 403.04,
+    "POL": {
+        "buy_price": 692.86,
         "current_price": 403.69,
-        "qty": 130,
-        "sector": "banking"
+        "qty": 100,
+        "sector": "oil & gas"
     },
 
     "UBL": {
-        "buy_price": 393.53,
+        "buy_price": 424.42,
         "current_price": 415.22,
-        "qty": 300,
+        "qty": 500,
         "sector": "banking"
     }
 }
