@@ -46,6 +46,7 @@ SYMBOL_MAP = {
     "HUBC": "hub-power",
     "NML": "nishat-mills",
     "NBP": "national-bank-pakistan",
+    "PRL": "pakistan-refinery",
     "KEL": "k-electric"
 }
 
@@ -53,8 +54,14 @@ portfolio = {
     "FFC": {
         "buy_price": 554.49,
         "current_price": 137.43,
-        "qty": 150,
+        "qty": 170,
         "sector": "fertilizer"
+    },
+     "PRL": {
+        "buy_price": 106.13,
+        "current_price": 92.14,
+        "qty": 500,
+        "sector": "refinery"
     },
     
     "MEBL": {
@@ -64,10 +71,17 @@ portfolio = {
         "sector": "banking"
     },
 
+    "HUBC": {
+        "buy_price": 210.76,
+        "current_price": 202.59,
+        "qty": 1050,
+        "sector": "power"
+    },
+    
     "POL": {
         "buy_price": 692.86,
         "current_price": 403.69,
-        "qty": 100,
+        "qty": 400,
         "sector": "oil & gas"
     },
 
