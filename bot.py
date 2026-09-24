@@ -57,6 +57,7 @@ portfolio = {
         "qty": 170,
         "sector": "fertilizer"
     },
+    
      "PRL": {
         "buy_price": 106.13,
         "current_price": 92.14,
